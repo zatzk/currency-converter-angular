@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay, switchMap, take, timer } from 'rxjs';
 
+const REFRESH_INTERVAL = 24 * 60 * 60 * 1000; // 24 hours
+const CACHE_SIZE = 1;
 
 @Injectable({
   providedIn: 'root'
@@ -10,14 +12,26 @@ import { Observable } from 'rxjs';
 
 
 export class ExchangeService {
-  private apiUrl = environment.apiUrl + environment.apiKey;
+  private apiUrl = environment.apiUrl + environment.apiEndpoint;
+  cache$!: Observable<any>;
+
 
   constructor(private http: HttpClient) {
   }
 
-  getExchangeRate(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+  getExchangeRate(){
+    if(!this.cache$) {
+      const timer$ = timer(0, REFRESH_INTERVAL);
+      this.cache$ = timer$.pipe(
+        switchMap((_) => this.requestExchangeRate().pipe(take(1))),
+        shareReplay(CACHE_SIZE)
+      );
+    }
+    return this.cache$;
   }
 
+  requestExchangeRate(): Observable<any> {
+    return this.http.get<any>(this.apiUrl);
+  }
 
 }
