@@ -1,0 +1,27 @@
+.bg-page {
+  margin-top: 5rem;
+  height: 30rem;
+  width: 100%;
+  border-radius: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+mat-card {
+  height: 15rem;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+mat-card-content {
+  width: 80%;
+}
+.text-effects {
+  text-align: right;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

@@ -1,27 +1,38 @@
 <div class="bg-page">
   <mat-card>
     <mat-card-content>
-
-      <mat-form-field>
+      <mat-form-field floatLabel="always" appearance="outline">
         <mat-label>Amount</mat-label>
-        <input matInput type="number" >
+        <input matInput type="number" class="text-effects" [(ngModel)]="amount">
+        <span matTextPrefix>{{ getCurrencySymbol(selectedFromCurrency) }}&nbsp;</span>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field floatLabel="always" appearance="outline">
         <mat-label>From</mat-label>
-        <mat-select >
-          <mat-option></mat-option>
+        <mat-select [(ngModel)]="selectedFromCurrency">
+          <mat-option *ngFor="let currency of exchangeRateData.currencyList" [value]="currency.code">
+            {{currency.code}} - {{currency.name}}
+          </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field>
+
+      <mat-form-field floatLabel="always" appearance="outline">
         <mat-label>To</mat-label>
-        <mat-select >
-          <mat-option></mat-option>
+        <mat-select [(ngModel)]="selectedToCurrency">
+          <mat-option *ngFor="let currency of exchangeRateData.currencyList" [value]="currency.code">
+            {{currency.code}} - {{currency.name}}
+          </mat-option>
         </mat-select>
       </mat-form-field>
 
-      <button mat-raised-button color="primary" >Convert</button>
+      <button mat-raised-button color="primary" (click)="convert()">Convert</button>
 
+
+      <div *ngIf="convertedAmount">
+        <h3>Converted Amount</h3>
+        <p>{{convertedAmount}}</p>
+        <span matPrefix>{{ getCurrencySymbol(selectedFromCurrency) }}</span>
+      </div>
 
     </mat-card-content>
   </mat-card>
