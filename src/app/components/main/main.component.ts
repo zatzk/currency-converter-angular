@@ -12,6 +12,9 @@ export class MainComponent {
   selectedToCurrency!: string;
   amount!: number;
   convertedAmount!: number;
+  remainingDecimal!: number;
+  exchangeFromName!: string;
+  exchangeToName!: string;
 
   constructor(private exchangeService: ExchangeService) {
     this.fetchExchangeRate();
@@ -27,17 +30,25 @@ export class MainComponent {
       return;
     }
 
-    const fromRate = this.getRateForCurrency(this.selectedFromCurrency);
-    const toRate = this.getRateForCurrency(this.selectedToCurrency);
+    const fromRate: any = this.getRateForCurrency(this.selectedFromCurrency);
+    const toRate: any = this.getRateForCurrency(this.selectedToCurrency);
 
     if (!fromRate || !toRate) {
       return;
     }
 
-    this.convertedAmount = (this.amount / fromRate) * toRate;
+    this.exchangeFromName = fromRate.name;
+    this.exchangeToName = toRate.name;
+
+    const conversionAmount = (this.amount / fromRate.rate) * toRate.rate;
+    this.convertedAmount = Number(conversionAmount.toFixed(2));
+
+    const fractional = (conversionAmount - Math.floor(conversionAmount));
+    this.remainingDecimal = Number(fractional.toString().substring(4).slice(0, 4));
+
   }
   getRateForCurrency(currencyCode: string): number | undefined {
-    return this.exchangeRateData.currencyList.find((currency: any) => currency.code === currencyCode)?.rate;
+    return this.exchangeRateData.currencyList.find((currency: any) => currency.code === currencyCode);
   }
 
   fetchExchangeRate() {
