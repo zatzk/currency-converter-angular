@@ -20,20 +20,19 @@
         <mat-label>To</mat-label>
         <mat-select [(ngModel)]="selectedToCurrency">
           <mat-option *ngFor="let currency of exchangeRateData.currencyList" [value]="currency.code">
-            {{currency.code}} - {{currency.name}}
+            {{currency.code}} - <p> {{currency.name}}</p>
           </mat-option>
         </mat-select>
       </mat-form-field>
-
-      <button mat-raised-button color="primary" (click)="convert()">Convert</button>
-
-
-      <div *ngIf="convertedAmount">
-        <h3>Converted Amount</h3>
-        <p>{{convertedAmount}}</p>
-        <span matPrefix>{{ getCurrencySymbol(selectedFromCurrency) }}</span>
-      </div>
-
     </mat-card-content>
+
+    <div class="button-line">
+      <div *ngIf="convertedAmount">
+        <p class="prev-amount">{{amount}} {{exchangeFromName}} = </p>
+        <p class="conv-amount">{{convertedAmount}}<span>{{remainingDecimal}}</span> {{exchangeToName}}</p>
+      </div>
+      <button mat-raised-button color="primary" (click)="convert()">Convert</button>
+    </div>
+
   </mat-card>
 </div>

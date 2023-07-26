@@ -8,14 +8,29 @@
   justify-content: center;
 }
 mat-card {
-  height: 15rem;
-  width: 90%;
+  height: 13rem;
+  width: 60rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
 }
 mat-card-content {
-  width: 80%;
+  width: auto;
+  display: grid;
+  gap: 4px 16px;
+  grid-auto-flow: column;
+  grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr);
+  /* grid-template-rows: auto [input-row-start] auto [input-row-end] auto; */
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+.button-line {
+  display: grid;
+  padding: 0 16px;
+  gap: 4px 16px;
+  grid-template-columns: 5fr 200px ;
+  grid-auto-flow: column;
+  height: 100%;
+  align-items: center;
 }
 .text-effects {
   text-align: right;
@@ -24,4 +39,29 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+button {
+  grid-column: 2;
+  justify-self: end;
+  width: auto;
+}
+p {
+  line-height: 1.7;
+}
+.conv-amount {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: rgb(46, 60, 87);
+  margin: 0 auto;
+}
+span {
+  color: rgb(161, 166, 176);
+}
+
+.prev-amount {
+  font-size: 1rem;
+  color: rgb(92, 102, 123);
+  font-weight: 300;
+  margin: 0px;
+  max-width: 100%;
 }
