@@ -12,7 +12,7 @@ const CACHE_SIZE = 1;
 
 
 export class ExchangeService {
-  private apiUrl = environment.apiUrl + environment.apiEndpoint;
+  private apiUrl = environment.apiUrl;
   cache$!: Observable<any>;
 
 
