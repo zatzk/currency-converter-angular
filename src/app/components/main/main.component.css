@@ -8,7 +8,7 @@
   justify-content: center;
 }
 mat-card {
-  height: 13rem;
+  height: 14rem;
   width: 60rem;
   display: flex;
   flex-direction: column;
@@ -27,7 +27,7 @@ mat-card-content {
   display: grid;
   padding: 0 16px;
   gap: 4px 16px;
-  grid-template-columns: 5fr 200px ;
+  grid-template-columns: 5fr 300px ;
   grid-auto-flow: column;
   height: 100%;
   align-items: center;
@@ -40,11 +40,18 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-button {
+.button-section {
+
   grid-column: 2;
-  justify-self: end;
+  justify-self: flex-start;
   width: auto;
+  display: grid;
+  grid-auto-flow: row;
+  gap: 4px 16px;
+  height: 100%;
+  width: 100%;
 }
+
 p {
   line-height: 1.7;
 }

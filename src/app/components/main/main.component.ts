@@ -15,6 +15,7 @@ export class MainComponent {
   remainingDecimal!: number;
   exchangeFromName!: string;
   exchangeToName!: string;
+  date!: Date;
 
   constructor(private exchangeService: ExchangeService) {
     this.fetchExchangeRate();
@@ -46,16 +47,30 @@ export class MainComponent {
     const fractional = (conversionAmount - Math.floor(conversionAmount));
     this.remainingDecimal = Number(fractional.toString().substring(4).slice(0, 4));
 
+    this.date = this.exchangeRateData.date;
   }
   getRateForCurrency(currencyCode: string): number | undefined {
     return this.exchangeRateData.currencyList.find((currency: any) => currency.code === currencyCode);
   }
 
+  convertTimeStampToDate(timestamp: number): string {
+    const date = new Date(timestamp * 1000);
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+    };
+    return `Last updated: ${date.toLocaleDateString('en-US', options)} `
+  }
+
   fetchExchangeRate() {
     this.exchangeService.getExchangeRate()
     .subscribe((currencies) => {
-      const timestamp = currencies.timestamp;
-
+      const date = this.convertTimeStampToDate(currencies.timestamp);
+      console.log(date);
       const currencyList = Object.keys(currencies.rates).map((key) => {
         return {
           code: key,
@@ -66,7 +81,7 @@ export class MainComponent {
         };
       });
       this.exchangeRateData = {
-        timestamp,
+        date,
         currencyList
       };
       console.log('Fetched exchange rate:', this.exchangeRateData);

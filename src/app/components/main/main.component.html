@@ -31,7 +31,10 @@
         <p class="prev-amount">{{amount}} {{exchangeFromName}} = </p>
         <p class="conv-amount">{{convertedAmount}}<span>{{remainingDecimal}}</span> {{exchangeToName}}</p>
       </div>
-      <button mat-raised-button color="primary" (click)="convert()">Convert</button>
+      <div class="button-section">
+        <button mat-raised-button color="primary" (click)="convert()">Convert</button>
+        <small>{{date}}</small>
+      </div>
     </div>
 
   </mat-card>
